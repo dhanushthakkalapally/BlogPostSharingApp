@@ -10,4 +10,8 @@ router.get('/',Posts.getPosts);
 
 router.get('/allPosts',Posts.getAllPosts);
 
+router.get('/getPost',Posts.getPost);
+
+router.delete('/deletePost',Posts.deletePost);
+
 module.exports = router;

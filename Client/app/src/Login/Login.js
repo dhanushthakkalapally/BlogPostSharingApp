@@ -38,7 +38,16 @@ login = (event) => {
         this.props.loggedIn(response.data.userId);
         this.props.history.push("/")
     }).catch(error => {
-        console.log(error);
+
+        this.setState(error => {
+            this.setState({...this.state , failed: true})
+
+        });
+
+        setTimeout(() => {
+            this.setState( { ...this.state,failed: false})
+        }, 2000)
+
     })
 
 }
@@ -50,6 +59,10 @@ login = (event) => {
 
         return(
     <div className='container size mt-5'>
+        { this.state.failed &&  <div className="alert alert-danger" role="alert">
+            Please Check the Credentials and Try again
+        </div>}
+
             <form onSubmit={this.login}>
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Email address</label>
@@ -60,7 +73,7 @@ login = (event) => {
                     <label htmlFor="exampleInputPassword1">Password</label>
                     <input type="password" onChange={this.passwordChangeHandler} value={this.state.value} className="form-control" id="exampleInputPassword1"/>
                 </div>
-                <button type="submit" className="btn btn-primary">Login</button>
+                <button disabled={this.state.email.length === 0 || this.state.password.length === 0 } type="submit" className="btn btn-primary">Login</button>
             </form>
     </div>
         )

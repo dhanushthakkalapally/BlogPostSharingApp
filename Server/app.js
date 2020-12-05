@@ -32,9 +32,9 @@ app.use('/posts', PostRoutes);
 
 sequelize.sync().then(
     result =>{
-        app.listen(8081);
+        app.listen(8080);
     }
 ).catch(err =>{
-    console.log('hello from error')
+    console.log(err)
 })
 

@@ -5,11 +5,11 @@ import {withRouter} from 'react-router-dom';
 class Posts extends Component{
 
     render(){
-
+        console.log(this.props.PostsDetails)
 
         return (
        this.props.PostsDetails.map((post,index)=>{
-         return  <Post  key = {index}  Date  = {post.createdAt} Title = {post.Title} Description = {post.Description}/>})
+         return  <Post onDelete = {this.props.onDelete} key = {index} id = {post.id} Date  = {post.createdAt} username={post.username} Title = {post.Title} Description = {post.Description}/>})
         )
 
 

@@ -11,7 +11,7 @@ import authReducer from "./Store/authReducer";
 
 const store = createStore(authReducer);
 
-axios.defaults.baseURL = 'http://localhost:8081';
+axios.defaults.baseURL = 'https://blogpostsharing.azurewebsites.net/';
 ReactDOM.render(
   <React.StrictMode >
       <Provider store={store}>

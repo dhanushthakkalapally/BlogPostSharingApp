@@ -1,3 +1,4 @@
+
 const user = require('../Models/User');
 const posts = require('../Models/Posts');
 const httpStatus = require('http-status');
@@ -31,7 +32,6 @@ exports.createPost = (req,res,next) => {
 exports.getPosts = (req,res,next) => {
     const userId = req.query.userId;
     posts.findAll({where: {userId : userId}}).then(response => {
-        console.log(response);
             return res.status(httpStatus.OK).json({posts: response});
 
     }).catch(err => {
@@ -44,6 +44,20 @@ exports.getAllPosts = async  (req,res) => {
     const userId = req.query.userId;
     const rs = await sequelize.query('call expressy.Posts_getPosts(?)',{replacements:[userId]});
     return res.status(httpStatus.OK).send({data:rs});
+}
 
+exports.getPost = async (req,res) => {
+    const id = req.query.postId;
+    const response = await posts.findByPk(id);
+    return res.status(httpStatus.OK).send(response)
+}
 
+exports.deletePost = async (req,res) => {
+    const id = req.query.postId;
+    const userId = req.query.userId ;
+    const response = await posts.findByPk(id);
+    await response.destroy();
+    const postsDetails = await posts.findAll({where:{userId: userId}})
+    return res.status(httpStatus.OK).json({posts: postsDetails});
+    return res.status(httpStatus.OK).send({message: 'Delete Successfully'});
 }

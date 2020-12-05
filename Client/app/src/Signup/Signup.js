@@ -9,7 +9,8 @@ constructor(props,context) {
 this.state = {
     email : '',
     username : '',
-    password :''
+    password :'',
+    error: false
 }
 
 }
@@ -42,11 +43,19 @@ this.state = {
              axios.post('/users',this.state).then(response => {
                  if (response.status == 200){
                     this.props.history.push({pathname:'/login'})
+                     this.setState({
+                         ...this.state,
+                         error: false
+                     })
                  }
 
+
              }).catch(error => {
-                 alert("unknown error occured");
-                 console.log(error)
+               if (error) {}
+               this.setState({
+                   ...this.state,
+                   error: true
+               })
              })
     }
 
@@ -54,6 +63,9 @@ this.state = {
 
     return(
         <div className='container size mt-4 mr-5'>
+            { this.state.error && <div className="alert alert-danger" role="alert">
+                An error occured while creating an account please check the details and try again
+            </div>}
         <form onSubmit={this.formSignupHandler}>
             <div className="form-group">
                 <label htmlFor="exampleInputEmail1">Email address</label>
@@ -70,7 +82,7 @@ this.state = {
                 <input type="password" className="form-control" id="exampleInputPassword1" value = {this.state.password} onChange={(event)=>{this.passwordChangeHandler(event)}} />
             </div>
 
-            <button type="submit" className="btn btn-primary">Signup</button>
+            <button disabled={this.state.email.length === 0 || this.state.password.length === 0 || this.state.username.length === 0 } type="submit" className="btn btn-primary">Signup</button>
         </form>
         </div>);
     }

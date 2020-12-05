@@ -7,6 +7,7 @@ const initialState = {
 export default function auth (state = initialState , action) {
     switch (action.type) {
         case 'LoggedIn': {
+            localStorage.setItem('userId',action.userId.toString());
             return {
                 auth : {
                     isAuthenticated: true,
@@ -15,7 +16,7 @@ export default function auth (state = initialState , action) {
             }
         }
         case 'Logout': {
-            console.log('hello')
+            localStorage.clear();
             return {
                 auth: {
                     isAuthenticated: false
