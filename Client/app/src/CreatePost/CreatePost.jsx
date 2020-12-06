@@ -89,7 +89,8 @@ class CreatePost extends Component {
                     <label htmlFor="exampleFormControlTextarea1"><h4>Write Your Story</h4></label>
                     <textarea onChange={this.onDescriptionChange} value={this.state.description} className="form-control" id="exampleFormControlTextarea1" rows="10" placeholder="The Story Goes like this......"></textarea>
                 </div>
-                <button disabled={(this.state.description.length === 0 && this.state.title.length === 0) || this.state.posting} type = 'submit' className='btn btn-primary'>Submit</button>
+                {!this.state.posting && <button disabled={(this.state.description.length === 0 && this.state.title.length === 0) || this.state.posting} type = 'submit' className='btn btn-primary'>Submit</button>}
+                { this.state.posting && <i className="fas fa-2x fa-spinner fa-pulse"/>}
             </form></div>
 
             )

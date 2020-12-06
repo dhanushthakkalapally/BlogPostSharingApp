@@ -10,9 +10,8 @@ class UserProfile extends Component {
             userDetails: {},
             Posts: [],
             deleteFail: false,
-            deleteSuccess: false
-
-
+            deleteSuccess: false,
+            cm: false
         }
     }
 
@@ -53,13 +52,14 @@ class UserProfile extends Component {
 
            this.setState({
                ...this.state,
-               userDetails : response.data
+               userDetails : response.data,
            })
        })
        axios.get('posts/',{params:{userId: userId}}).then(response => {
            this.setState({
                ...this.state,
-               Posts : response.data.posts
+               Posts : response.data.posts,
+               cm:true
            })
        })
 
@@ -69,7 +69,9 @@ class UserProfile extends Component {
     render () {
         return (
             <div>
-            <Profile userDetails = {this.state.userDetails}  onFollowHandler={this.onFollowHandler} />
+                {!this.state.cm && <div className='text-center mt-3'><i className="fas fa-4x fa-spinner fa-pulse"></i>
+                </div>}
+                {this.state.cm && <div><Profile userDetails = {this.state.userDetails}  onFollowHandler={this.onFollowHandler} />
                 {this.state.deleteSuccess && <div className="alert  container alert-success" role="alert">
                    SuccessFully Deleted the Post
                 </div>}
@@ -78,7 +80,7 @@ class UserProfile extends Component {
                         Unknow Error Occurred Unable to delete the Post..
                     </div>
                 }
-                <Posts PostsDetails={this.state.Posts} onDelete = {this.onDelete} />
+                <Posts PostsDetails={this.state.Posts} onDelete = {this.onDelete} /> </div>}
             </div>
         );
 

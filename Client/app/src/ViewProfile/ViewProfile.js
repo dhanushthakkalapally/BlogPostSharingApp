@@ -9,7 +9,8 @@ class ViewProfile extends Component{
         super();
         this.state = {
             userDetails: {},
-            Posts: []
+            Posts: [],
+            cm: false
         }
     }
 
@@ -45,7 +46,8 @@ class ViewProfile extends Component{
         axios.get('posts/',{params:{userId: userId}}).then(response => {
             this.setState({
                 ...this.state,
-                Posts : response.data.posts
+                Posts : response.data.posts,
+                cm: true
             })
         })
 
@@ -56,8 +58,12 @@ class ViewProfile extends Component{
 
         return (
             <div>
+            {!this.state.cm && <div className='text-center mt-3'><i className="fas fa-4x fa-spinner fa-pulse"></i>
+        </div> }
+                {this.state.cm && <div>
                 <Profile userDetails = {this.state.userDetails}  onUnFollowHandler = {this.onUnFollowHandler} onFollowHandler={this.onFollowHandler} />
                 <Posts PostsDetails={this.state.Posts} />
+            </div>}
             </div>
         );
 
